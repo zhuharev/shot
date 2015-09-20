@@ -1,0 +1,6 @@
+[app]
+phantomjspath=/usr/local/bin/phantomjs
+workers=2
+port=4004
+http
+;cachepath="shots"
