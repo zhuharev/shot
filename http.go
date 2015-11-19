@@ -20,6 +20,8 @@ func (s *Service) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if strUrl != "" {
 		fmt.Println("file not exists, get", fname)
 		s.Send(strUrl)
+		w.Header().Set("Content-Type", "image/png")
+		s.Draw(strUrl, w)
 	}
 }
 

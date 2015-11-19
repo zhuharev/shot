@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"sync"
 	"time"
 )
@@ -14,6 +16,8 @@ type Service struct {
 	cfg       *Config
 	ch        chan string
 	sriptPath string
+
+	tmpDir string
 
 	blockMu sync.Mutex
 	block   map[string]struct{}
@@ -37,24 +41,26 @@ func NewFromConfig(cfg *Config) (*Service, error) {
 	return s, nil
 }
 
-func (s *Service) Run() error {
-	bts, e := Asset("r.js")
-	if e != nil {
-		return fmt.Errorf("script not found")
-	}
-	f, e := ioutil.TempFile("", "shot")
-	if e != nil {
-		return fmt.Errorf("script not found")
-	}
-	_, e = f.Write(bts)
+func (s *Service) Run() (e error) {
+	s.tmpDir, e = ioutil.TempDir("", "shot")
 	if e != nil {
 		return e
 	}
-	s.sriptPath = f.Name()
-	f.Close()
+	e = RestoreAssets(s.tmpDir, "assets")
+	if e != nil {
+		return e
+	}
+	s.sriptPath = filepath.Join(s.tmpDir, "assets/rasterize.js")
 	fmt.Printf("Run %d workers\n", s.cfg.App.Workers)
 	for i := 0; i < s.cfg.App.Workers; i++ {
 		go s.Work(s.ch)
+	}
+	return nil
+}
+
+func (s *Service) Shotdown() error {
+	if s.tmpDir != "" {
+		return os.RemoveAll(s.tmpDir)
 	}
 	return nil
 }
