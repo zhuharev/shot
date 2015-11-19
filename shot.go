@@ -90,7 +90,8 @@ func (s *Service) Shot(u string) {
 		s.sriptPath,
 		u,
 		u,
-		"20000")
+		"20000",
+		s.cfg.App.CachePath)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 
@@ -99,6 +100,8 @@ func (s *Service) Shot(u string) {
 	if e != nil {
 		log.Fatal(e)
 	}
+
+	fmt.Printf("in all caps: %q\n", out.String())
 
 	fmt.Println(time.Since(start))
 	wg.Done()
