@@ -20,6 +20,10 @@ func main() {
 }
 ```
 
-## Reference
-
-[Handle inter-process communication between PhantomJS and Golang processes via hixie-76 websockets](http://studygolang.com/articles/3659)
+## Screenshots
+<table>
+  <tr>
+    <td width="50%"><img src="https://raw.githubusercontent.com/zhuharev/shot/master/example/github.com.png">
+    <td width="50%"><img src="https://raw.githubusercontent.com/zhuharev/shot/master/example/google.com.png">
+  </tr>
+</table>
