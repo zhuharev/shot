@@ -1,4 +1,4 @@
-# shot
+# shot [![Go Report Card](https://goreportcard.com/badge/github.com/zhuharev/shot)](https://goreportcard.com/report/github.com/zhuharev/shot) [![GoDoc](https://godoc.org/github.com/zhuharev/shot?status.svg)](http://godoc.org/github.com/zhuharev/shot)
 site screenshot microservice with go and phantomjs
 
 ## Usage 
